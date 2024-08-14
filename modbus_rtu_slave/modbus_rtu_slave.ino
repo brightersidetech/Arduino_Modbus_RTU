@@ -1,6 +1,11 @@
 #include <ModbusRTUSlave.h>
+#include <SoftwareSerial.h>
 
-ModbusRTUSlave modbus_rtu_slave(Serial);
+const uint8_t rxPin = 10;
+const uint8_t txPin = 11;
+
+SoftwareSerial mySerial(rxPin, txPin);
+ModbusRTUSlave modbus_rtu_slave(mySerial);
 
 const uint8_t slaveID = 1;
 const uint32_t baud = 9600;
@@ -22,5 +27,5 @@ void loop() {
   // Write value to Holding register
   holdingRegisters[0] = sensor;
   // Modbus Poll
-  modbus_slave.poll();
+  modbus_rtu_slave.poll();
 }
